@@ -148,11 +148,11 @@ class Nominatim
     private function decodeResponse(string $format, Request $request, ResponseInterface $response)
     {
         if ('json' === $format) {
-            return \json_decode($response->getBody(), true);
+            return \json_decode($response->getBody()->getContents(), true);
         }
 
         if ('xml' === $format) {
-            return new \SimpleXMLElement($response->getBody());
+            return new \SimpleXMLElement($response->getBody()->getContents());
         }
 
         throw new NominatimException('Format is undefined or not supported for decode response', $request, $response);
